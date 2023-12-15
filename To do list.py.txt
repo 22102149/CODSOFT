@@ -1,0 +1,96 @@
+import json
+
+class TodoList:
+    def __init__(self, filename="tasks.json"):
+        self.filename = filename
+        self.tasks = self.load_tasks()
+
+    def load_tasks(self):
+        try:
+            with open(self.filename, 'r') as file:
+                return json.load(file)
+        except (json.JSONDecodeError, FileNotFoundError):
+            return []
+
+    def save_tasks(self):
+        with open(self.filename, 'w') as file:
+            json.dump(self.tasks, file, indent=2)
+
+    def show_menu(self):
+        print("To-Do List Menu:")
+        print("1. View Tasks")
+        print("2. Add Task")
+        print("3. Update Task")
+        print("4. Delete Task")
+        print("5. Exit")
+
+    def view_tasks(self):
+        if not self.tasks:
+            print("No tasks available.")
+        else:
+            print("Tasks:")
+            for i, task in enumerate(self.tasks, 1):
+                print(f"{i}. {task}")
+
+    def add_task(self):
+        task = input("Enter the task: ")
+        self.tasks.append(task)
+        self.save_tasks()
+        print("Task added successfully.")
+
+    def update_task(self):
+        self.view_tasks()
+        if self.tasks:
+            try:
+                task_number = int(input("Enter the task number to update: ")) - 1
+                if 0 <= task_number < len(self.tasks):
+                    new_task = input("Enter the new task: ")
+                    self.tasks[task_number] = new_task
+                    self.save_tasks()
+                    print("Task updated successfully.")
+                else:
+                    print("Invalid task number.")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+        else:
+            print("No tasks available.")
+
+    def delete_task(self):
+        self.view_tasks()
+        if self.tasks:
+            try:
+                task_number = int(input("Enter the task number to delete: ")) - 1
+                if 0 <= task_number < len(self.tasks):
+                    deleted_task = self.tasks.pop(task_number)
+                    self.save_tasks()
+                    print(f"Task '{deleted_task}' deleted successfully.")
+                else:
+                    print("Invalid task number.")
+            except ValueError:
+                print("Invalid input")
+        else:
+            print("No tasks available.")
+
+    def main(self):
+        while True:
+            self.show_menu()
+            choice = input("Enter your choice (1-5): ")
+
+            if choice == "1":
+                self.view_tasks()
+            elif choice == "2":
+                self.add_task()
+            elif choice == "3":
+                self.update_task()
+            elif choice == "4":
+                self.delete_task()
+            elif choice == "5":
+                print("Exiting the To-Do List application. ")
+                break
+            else:
+                print("Invalid choice. ")
+
+
+if __name__ == "__main__":
+    todo_app = TodoList()
+    todo_app.main()

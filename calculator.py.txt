@@ -1,0 +1,48 @@
+def add(s, r):
+    return s + r
+
+def subtract(s, r):
+    return s - r
+
+def multiply(s, r):
+    return s * r
+
+def divide(s, r):
+    if s != 0:
+        return s / r
+    else:
+        return "Error: Cannot divide by zero."
+
+def calculator():
+    print("Simple Calculator")
+    print("Operations:")
+    print("1. Addition")
+    print("2. Subtraction")
+    print("3. Multiplication")
+    print("4. Division")
+
+    choice = input("Enter operation (1/2/3/4): ")
+
+    if choice not in ['1', '2', '3', '4']:
+        print("Invalid input.")
+        return
+
+    
+    a1 = float(input("Enter first number: "))
+    a2 = float(input("Enter second number: "))
+
+    
+    if choice == '1':
+        result = add(a1, a2)
+        print(f"{a1} + {a2} = {result}")
+    elif choice == '2':
+        result = subtract(a1, a2)
+        print(f"{a1} - {a2} = {result}")
+    elif choice == '3':
+        result = multiply(a1, a2)
+        print(f"{a1} * {a2} = {result}")
+    elif choice == '4':
+        result = divide(a1, a2)
+        print(f"{a1} / {a2} = {result}")
+
+calculator()
