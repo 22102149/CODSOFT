@@ -1,0 +1,47 @@
+import random
+
+def determine_winner(user_choice, computer_choice):
+    outcomes = {'rock': 'scissors', 'paper': 'rock', 'scissors': 'paper'}
+    if user_choice == computer_choice:
+        return "It's a tie!", 0
+    elif computer_choice == outcomes[user_choice]:
+        return "You will be lose!", -1  # User loses in this condition
+    else:
+        return "You will be win!", 1
+
+def get_user_choice():
+    user_choice = input("Enter your choice: rock, paper, or scissors ").lower()
+    while user_choice not in ['rock', 'paper', 'scissors']:
+        print("Invalid choice. Please enter rock, paper, or scissors.")
+        user_choice = input().lower()
+    return user_choice
+
+def get_computer_choice():
+    choices = ['rock', 'paper', 'scissors']
+    return random.choice(choices)
+
+def play_game():
+    print("Welcome to Rock, Paper, Scissors!")
+
+    total_rounds = int(input("Enter the number of rounds you want to play: "))
+    user_score = 0
+
+    for round_num in range(1, total_rounds + 1):
+        print(f"\nRound {round_num}")
+        user_choice = get_user_choice()
+        computer_choice = get_computer_choice()
+
+        result, score = determine_winner(user_choice, computer_choice)
+        user_score += score
+
+        print(f"You chose {user_choice}. Computer chose {computer_choice}. {result}")
+        print(f"Score: You {user_score} - Computer 0")
+
+    print("\nGame Over!")
+    if user_score == total_rounds:
+        print("Congratulations! You won the game!")
+    else:
+        print("Sorry, you lost the game.")
+
+if _name_ == "_main_":
+    play_game()
